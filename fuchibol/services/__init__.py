@@ -1,0 +1,1 @@
+from .sofascore import SofascoreClient
