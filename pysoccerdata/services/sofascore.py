@@ -46,6 +46,18 @@ class SofascoreClient:
                 return {}
             raise exc
 
+    def get_incidents(self, event_id: int) -> dict:
+        url = f"{self.BASE_ENDPOINT}/event/{event_id}/incidents"
+        try:
+            with httpx.Client() as client:
+                response = client.get(url)
+                response.raise_for_status()
+                return response.json()["incidents"]
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code == 404:
+                return {}
+            raise exc
+
     def get_team(self, team_id: int) -> dict:
         url = f"{self.BASE_ENDPOINT}/team/{team_id}"
         try:
@@ -53,6 +65,7 @@ class SofascoreClient:
                 response = client.get(url)
                 response.raise_for_status()
                 import json
+
                 print(json.dumps(response.json()["team"], indent=4))
         except httpx.HTTPStatusError as exc:
             if exc.response.status_code == 404:
