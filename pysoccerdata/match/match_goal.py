@@ -1,5 +1,5 @@
 """
-Contains the MatchCards class.
+Contains the MatchGoal class.
 """
 
 from typing import List
@@ -8,9 +8,9 @@ from .match_player import MatchPlayer
 
 
 @dataclass
-class MatchCard:
+class MatchGoal:
     """
-    Represents a match card incident.
+    Represents a match goal incident.
     """
 
     _id: int = field(default=0, metadata={"doc": "Unique id"})
@@ -18,27 +18,21 @@ class MatchCard:
     is_home: bool = field(
         default=False, metadata={"doc": "True if the player is from the home team"}
     )
-    rescinded: bool = field(
-        default=False, metadata={"doc": "True if the card was rescinded"}
-    )
-    value: str = field(default="", metadata={"doc": "Card value, can be yellow or red"})
-    reason: str = field(default="", metadata={"doc": "Reason of the card"})
-    minute: int = field(default=0, metadata={"doc": "Minute when the card was given"})
-    added_time: int = field(default=0, metadata={"doc": "Time added by the referee"})
+    minute: int = field(default=0, metadata={"doc": "Minute when the goal was scored"})
+    value: str = field(default="", metadata={"doc": "Goal value"})
 
-
-def parse_match_cards(data: List[dict]) -> List[MatchCard]:
+def parse_match_goals(data: List[dict]) -> List[MatchGoal]:
     """
-    Parse a list of match cards.
+    Parse a list of match goals.
 
     Args:
-        data (List[dict]): List of match cards.
-
-    Returns:
-        List[MatchCard]: List of parsed match cards.
+        data (List[dict]): List of match goals.
+    
+    Returns:   
+        List[MatchGoal]: List of parsed match goals.
     """
     return [
-        MatchCard(
+        MatchGoal(
             _id=item.get("id"),
             player=MatchPlayer(
                 _id=item.get("player", {}).get("id"),
@@ -48,11 +42,8 @@ def parse_match_cards(data: List[dict]) -> List[MatchCard]:
                 jersey_number=item.get("player", {}).get("jerseyNumber"),
             ),
             is_home=item.get("isHome"),
-            rescinded=item.get("rescinded"),
             value=item.get("incidentClass"),
-            reason=item.get("reason"),
             minute=item.get("time"),
-            added_time=item.get("addedTime") or 0,
         )
         for item in data
     ]

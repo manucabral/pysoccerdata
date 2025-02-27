@@ -10,9 +10,11 @@ from .match import (
     MatchDetails,
     MatchCard,
     MatchStats,
+    MatchGoal,
     parse_match_team,
     parse_match_stats,
     parse_match_cards,
+    parse_match_goals,
     MatchStatus,
     IncidentType,
 )
@@ -84,6 +86,7 @@ class Client:
             away_team=parse_match_team(_match, "awayScore", "awayTeam"),
             stats=stats,
             cards=self.get_match_cards(match_id),
+            goals=self.get_match_goals(match_id)
         )
 
     def get_match_incidents(self, match_id: int) -> dict:
@@ -115,6 +118,25 @@ class Client:
             if incident.get("incidentType") == IncidentType.CARD.value
         ]
         return parse_match_cards(card_incidents)
+
+    def get_match_goals(self, match_id: int) -> List[MatchGoal]:
+        """
+        Get all goals from a specific match.
+
+        Args:
+            match_id (int): The match id.
+
+        Returns:
+            dict: A dictionary with all match goals.
+        """
+        incidents = self.get_match_incidents(match_id)
+        goals = [
+            incident
+            for incident in incidents
+            if incident.get("incidentType") == IncidentType.GOAL.value
+        ]
+        return parse_match_goals(goals)
+    
 
     def get_team_details(self, team_id: int) -> dict:
         """
