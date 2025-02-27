@@ -34,16 +34,24 @@ class Shots:
     shots_on_goal: StatMatchItem = field(default_factory=default_stat_match_item)
     hit_woodwork: StatMatchItem = field(default_factory=default_stat_match_item)
     shots_off_goal: StatMatchItem = field(default_factory=default_stat_match_item)
-    blocked_scoring_attempt: StatMatchItem = field(default_factory=default_stat_match_item)
-    total_shots_inside_box: StatMatchItem = field(default_factory=default_stat_match_item)
-    total_shots_outside_box: StatMatchItem = field(default_factory=default_stat_match_item)
+    blocked_scoring_attempt: StatMatchItem = field(
+        default_factory=default_stat_match_item
+    )
+    total_shots_inside_box: StatMatchItem = field(
+        default_factory=default_stat_match_item
+    )
+    total_shots_outside_box: StatMatchItem = field(
+        default_factory=default_stat_match_item
+    )
 
 
 @dataclass
 class Attack:
     big_chance_scored: StatMatchItem = field(default_factory=default_stat_match_item)
     big_chance_missed: StatMatchItem = field(default_factory=default_stat_match_item)
-    accurate_through_ball: StatMatchItem = field(default_factory=default_stat_match_item)
+    accurate_through_ball: StatMatchItem = field(
+        default_factory=default_stat_match_item
+    )
     touches_in_opp_box: StatMatchItem = field(default_factory=default_stat_match_item)
     fouled_final_third: StatMatchItem = field(default_factory=default_stat_match_item)
     offsides: StatMatchItem = field(default_factory=default_stat_match_item)
@@ -54,7 +62,9 @@ class Passes:
     accurate_passes: StatMatchItem = field(default_factory=default_stat_match_item)
     throw_ins: StatMatchItem = field(default_factory=default_stat_match_item)
     final_third_entries: StatMatchItem = field(default_factory=default_stat_match_item)
-    final_third_phase_statistic: StatMatchItem = field(default_factory=default_stat_match_item)
+    final_third_phase_statistic: StatMatchItem = field(
+        default_factory=default_stat_match_item
+    )
     accurate_long_balls: StatMatchItem = field(default_factory=default_stat_match_item)
     accurate_cross: StatMatchItem = field(default_factory=default_stat_match_item)
 
@@ -63,8 +73,12 @@ class Passes:
 class Duels:
     duel_won_percent: StatMatchItem = field(default_factory=default_stat_match_item)
     dispossessed: StatMatchItem = field(default_factory=default_stat_match_item)
-    ground_duels_percentage: StatMatchItem = field(default_factory=default_stat_match_item)
-    aerial_duels_percentage: StatMatchItem = field(default_factory=default_stat_match_item)
+    ground_duels_percentage: StatMatchItem = field(
+        default_factory=default_stat_match_item
+    )
+    aerial_duels_percentage: StatMatchItem = field(
+        default_factory=default_stat_match_item
+    )
     dribbles_percentage: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
