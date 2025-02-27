@@ -7,8 +7,9 @@ from .utils import get_today
 from .services import SofascoreClient
 from .match_summary import MatchSummary
 from .match_details import MatchDetails
-from .match_team import parse_match_team, MatchTeam
-from .match_stats import parse_match_stats, MatchStats
+from .match_team import parse_match_team
+from .match_stats import parse_match_stats
+from .match_status import MatchStatus
 
 
 class Client:
@@ -40,7 +41,7 @@ class Client:
         return [
             MatchSummary(
                 _id=event.get("id"),
-                status=event.get("status", {}).get("description"),
+                status=MatchStatus(event.get("status", {}).get("type", "notstarted")),
                 info=event.get("slug"),
             )
             for event in events
