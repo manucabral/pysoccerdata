@@ -2,6 +2,7 @@ from typing import List
 from .match_summary import MatchSummary
 from .match_status import MatchStatus
 
+
 def filter_by(matches: List[MatchSummary], status: MatchStatus) -> List[MatchSummary]:
     """
     Filter matches by status.
