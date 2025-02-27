@@ -5,7 +5,6 @@ Contains the Match class.
 from dataclasses import dataclass, field
 
 
-
 @dataclass
 class MatchDetails:
     """
