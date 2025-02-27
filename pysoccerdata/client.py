@@ -80,13 +80,18 @@ class Client:
         """
         _match = self.__sofascore.get_event(match_id)
         stats = self.get_match_stats(match_id)
+        win_probability = self.get_win_probability(match_id)
         return MatchDetails(
             _id=_match.get("id"),
-            home_team=parse_match_team(_match, "homeScore", "homeTeam"),
-            away_team=parse_match_team(_match, "awayScore", "awayTeam"),
+            home_team=parse_match_team(
+                _match, "homeScore", "homeTeam", win_probability
+            ),
+            away_team=parse_match_team(
+                _match, "awayScore", "awayTeam", win_probability
+            ),
             stats=stats,
             cards=self.get_match_cards(match_id),
-            goals=self.get_match_goals(match_id)
+            goals=self.get_match_goals(match_id),
         )
 
     def get_match_incidents(self, match_id: int) -> dict:
@@ -136,7 +141,18 @@ class Client:
             if incident.get("incidentType") == IncidentType.GOAL.value
         ]
         return parse_match_goals(goals)
-    
+
+    def get_win_probability(self, match_id: int) -> dict:
+        """
+        Get the win probability from a specific match.
+
+        Args:
+            match_id (int): The match id.
+
+        Returns:
+            dict: A dictionary with the win probability.
+        """
+        return self.__sofascore.get_win_probability(match_id)
 
     def get_team_details(self, team_id: int) -> dict:
         """
