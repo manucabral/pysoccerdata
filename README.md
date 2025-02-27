@@ -3,15 +3,15 @@ A simple python package for extracting real-time soccer data from diverse online
 
 ### Installation
 ```
-pip install fuchibol
+pip install pysoccerdata
 ```
 
 ### Usage
 Simple usage, please read the docs.
 ```py
-import fuchibol
+import pysoccerdata
 
-client = fuchibol.client()
+client = pysoccerdata.client()
 matchs = client.get_matchs()
 
 for match in matchs:
