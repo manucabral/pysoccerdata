@@ -58,6 +58,18 @@ class SofascoreClient:
                 return {}
             raise exc
 
+    def get_win_probability(self, event_id: int) -> dict:
+        url = f"{self.BASE_ENDPOINT}/event/{event_id}/win-probability"
+        try:
+            with httpx.Client() as client:
+                response = client.get(url)
+                response.raise_for_status()
+                return response.json()["winProbability"]
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code == 404:
+                return {}
+            raise exc
+            
     def get_team(self, team_id: int) -> dict:
         url = f"{self.BASE_ENDPOINT}/team/{team_id}"
         try:
