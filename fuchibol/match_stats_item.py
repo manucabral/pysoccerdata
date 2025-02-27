@@ -1,96 +1,99 @@
-import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+
+def default_stat_match_item():
+    return StatMatchItem(name="No data", home=0.0, away=0.0, result="No data")
 
 
 @dataclass
 class StatMatchItem:
-    name: str
-    home: float
-    away: float
-    result: str
+    name: str = ""
+    home: float = 0.0
+    away: float = 0.0
+    result: str = ""
 
 
 @dataclass
 class Overview:
-    ball_possession: StatMatchItem
-    expected_goals: StatMatchItem
-    big_chance_created: StatMatchItem
-    total_shots_on_goal: StatMatchItem
-    goalkeeper_saves: StatMatchItem
-    corner_kicks: StatMatchItem
-    fouls: StatMatchItem
-    passes: StatMatchItem
-    total_tackle: StatMatchItem
-    free_kicks: StatMatchItem
-    yellow_cards: StatMatchItem
+    ball_possession: StatMatchItem = field(default_factory=default_stat_match_item)
+    expected_goals: StatMatchItem = field(default_factory=default_stat_match_item)
+    big_chance_created: StatMatchItem = field(default_factory=default_stat_match_item)
+    total_shots_on_goal: StatMatchItem = field(default_factory=default_stat_match_item)
+    goalkeeper_saves: StatMatchItem = field(default_factory=default_stat_match_item)
+    corner_kicks: StatMatchItem = field(default_factory=default_stat_match_item)
+    fouls: StatMatchItem = field(default_factory=default_stat_match_item)
+    passes: StatMatchItem = field(default_factory=default_stat_match_item)
+    total_tackle: StatMatchItem = field(default_factory=default_stat_match_item)
+    free_kicks: StatMatchItem = field(default_factory=default_stat_match_item)
+    yellow_cards: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
 @dataclass
 class Shots:
-    total_shots_on_goal: StatMatchItem
-    shots_on_goal: StatMatchItem
-    hit_woodwork: StatMatchItem
-    shots_off_goal: StatMatchItem
-    blocked_scoring_attempt: StatMatchItem
-    total_shots_inside_box: StatMatchItem
-    total_shots_outside_box: StatMatchItem
+    total_shots_on_goal: StatMatchItem = field(default_factory=default_stat_match_item)
+    shots_on_goal: StatMatchItem = field(default_factory=default_stat_match_item)
+    hit_woodwork: StatMatchItem = field(default_factory=default_stat_match_item)
+    shots_off_goal: StatMatchItem = field(default_factory=default_stat_match_item)
+    blocked_scoring_attempt: StatMatchItem = field(default_factory=default_stat_match_item)
+    total_shots_inside_box: StatMatchItem = field(default_factory=default_stat_match_item)
+    total_shots_outside_box: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
 @dataclass
 class Attack:
-    big_chance_scored: StatMatchItem
-    big_chance_missed: StatMatchItem
-    accurate_through_ball: StatMatchItem
-    touches_in_opp_box: StatMatchItem
-    fouled_final_third: StatMatchItem
-    offsides: StatMatchItem
+    big_chance_scored: StatMatchItem = field(default_factory=default_stat_match_item)
+    big_chance_missed: StatMatchItem = field(default_factory=default_stat_match_item)
+    accurate_through_ball: StatMatchItem = field(default_factory=default_stat_match_item)
+    touches_in_opp_box: StatMatchItem = field(default_factory=default_stat_match_item)
+    fouled_final_third: StatMatchItem = field(default_factory=default_stat_match_item)
+    offsides: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
 @dataclass
 class Passes:
-    accurate_passes: StatMatchItem
-    throw_ins: StatMatchItem
-    final_third_entries: StatMatchItem
-    final_third_phase_statistic: StatMatchItem
-    accurate_long_balls: StatMatchItem
-    accurate_cross: StatMatchItem
+    accurate_passes: StatMatchItem = field(default_factory=default_stat_match_item)
+    throw_ins: StatMatchItem = field(default_factory=default_stat_match_item)
+    final_third_entries: StatMatchItem = field(default_factory=default_stat_match_item)
+    final_third_phase_statistic: StatMatchItem = field(default_factory=default_stat_match_item)
+    accurate_long_balls: StatMatchItem = field(default_factory=default_stat_match_item)
+    accurate_cross: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
 @dataclass
 class Duels:
-    duel_won_percent: StatMatchItem
-    dispossessed: StatMatchItem
-    ground_duels_percentage: StatMatchItem
-    aerial_duels_percentage: StatMatchItem
-    dribbles_percentage: StatMatchItem
+    duel_won_percent: StatMatchItem = field(default_factory=default_stat_match_item)
+    dispossessed: StatMatchItem = field(default_factory=default_stat_match_item)
+    ground_duels_percentage: StatMatchItem = field(default_factory=default_stat_match_item)
+    aerial_duels_percentage: StatMatchItem = field(default_factory=default_stat_match_item)
+    dribbles_percentage: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
 @dataclass
 class Defending:
-    won_tackle_percent: StatMatchItem
-    total_tackle: StatMatchItem
-    interception_won: StatMatchItem
-    ball_recovery: StatMatchItem
-    total_clearance: StatMatchItem
-    errors_lead_to_shot: StatMatchItem
+    won_tackle_percent: StatMatchItem = field(default_factory=default_stat_match_item)
+    total_tackle: StatMatchItem = field(default_factory=default_stat_match_item)
+    interception_won: StatMatchItem = field(default_factory=default_stat_match_item)
+    ball_recovery: StatMatchItem = field(default_factory=default_stat_match_item)
+    total_clearance: StatMatchItem = field(default_factory=default_stat_match_item)
+    errors_lead_to_shot: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
 @dataclass
 class Goalkeeping:
-    goalkeeper_saves: StatMatchItem
-    goals_prevented: StatMatchItem
-    dive_saves: StatMatchItem
-    high_claims: StatMatchItem
-    punches: StatMatchItem
-    goal_kicks: StatMatchItem
+    goalkeeper_saves: StatMatchItem = field(default_factory=default_stat_match_item)
+    goals_prevented: StatMatchItem = field(default_factory=default_stat_match_item)
+    dive_saves: StatMatchItem = field(default_factory=default_stat_match_item)
+    high_claims: StatMatchItem = field(default_factory=default_stat_match_item)
+    punches: StatMatchItem = field(default_factory=default_stat_match_item)
+    goal_kicks: StatMatchItem = field(default_factory=default_stat_match_item)
 
 
 @dataclass
 class MatchStats:
-    overview: Overview
-    shots: Shots
-    attack: Attack
-    passes: Passes
-    duels: Duels
-    defending: Defending
-    goalkeeping: Goalkeeping
+    overview: Overview = field(default_factory=Overview)
+    shots: Shots = field(default_factory=Shots)
+    attack: Attack = field(default_factory=Attack)
+    passes: Passes = field(default_factory=Passes)
+    duels: Duels = field(default_factory=Duels)
+    defending: Defending = field(default_factory=Defending)
+    goalkeeping: Goalkeeping = field(default_factory=Goalkeeping)
