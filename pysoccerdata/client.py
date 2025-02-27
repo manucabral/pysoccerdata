@@ -5,11 +5,11 @@ The main client to interact with the library.
 from typing import List
 from .utils import get_today
 from .services import SofascoreClient
-from .match_summary import MatchSummary
-from .match_details import MatchDetails
-from .match_team import parse_match_team
-from .match_stats import parse_match_stats
-from .match_status import MatchStatus
+from .match import MatchSummary
+from .match import MatchDetails
+from .match import parse_match_team
+from .match import parse_match_stats
+from .match import MatchStatus
 
 
 class Client:
@@ -78,3 +78,15 @@ class Client:
             away_team=parse_match_team(_match, "awayScore", "awayTeam"),
             stats=stats,
         )
+    
+    def get_team_details(self, team_id: int) -> dict:
+        """
+        Get all details from a specific team.
+
+        Args:
+            team_id (int): The team id.
+
+        Returns:
+            dict: A dictionary with all team details.
+        """
+        return self.__sofascore.get_team(team_id)

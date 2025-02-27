@@ -1,7 +1,7 @@
-import fuchibol
+import pysoccerdata
 
-client = fuchibol.Client()
+client = pysoccerdata.Client()
 matchs = client.get_matchs()
-in_progress = fuchibol.filter_by(matchs, fuchibol.MatchStatus.IN_PROGRESS)
+in_progress = pysoccerdata.filter_by(matchs, pysoccerdata.MatchStatus.IN_PROGRESS)
 for match in in_progress:
     print(match)

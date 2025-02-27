@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from .utils import camel_to_snake
+from ..utils import camel_to_snake
 from .match_stats_item import (
     StatMatchItem,
     Overview,
