@@ -5,11 +5,17 @@ The main client to interact with the library.
 from typing import List
 from .utils import get_today
 from .services import SofascoreClient
-from .match import MatchSummary
-from .match import MatchDetails
-from .match import parse_match_team
-from .match import parse_match_stats
-from .match import MatchStatus
+from .match import (
+    MatchSummary,
+    MatchDetails,
+    MatchCard,
+    MatchStats,
+    parse_match_team,
+    parse_match_stats,
+    parse_match_cards,
+    MatchStatus,
+    IncidentType,
+)
 
 
 class Client:
@@ -47,7 +53,7 @@ class Client:
             for event in events
         ]
 
-    def get_match_stats(self, match_id: int) -> dict:
+    def get_match_stats(self, match_id: int) -> MatchStats:
         """
         Get all stats from a specific match.
 
@@ -77,8 +83,39 @@ class Client:
             home_team=parse_match_team(_match, "homeScore", "homeTeam"),
             away_team=parse_match_team(_match, "awayScore", "awayTeam"),
             stats=stats,
+            cards=self.get_match_cards(match_id),
         )
-    
+
+    def get_match_incidents(self, match_id: int) -> dict:
+        """
+        Get all incidents from a specific match.
+
+        Args:
+            match_id (int): The match id.
+
+        Returns:
+            dict: A dictionary with all match incidents.
+        """
+        return self.__sofascore.get_incidents(match_id)
+
+    def get_match_cards(self, match_id: int) -> List[MatchCard]:
+        """
+        Get all given cards from a specific match.
+
+        Args:
+            match_id (int): The match id.
+
+        Returns:
+            dict: A dictionary with all match cards.
+        """
+        incidents = self.get_match_incidents(match_id)
+        card_incidents = [
+            incident
+            for incident in incidents
+            if incident.get("incidentType") == IncidentType.CARD.value
+        ]
+        return parse_match_cards(card_incidents)
+
     def get_team_details(self, team_id: int) -> dict:
         """
         Get all details from a specific team.
