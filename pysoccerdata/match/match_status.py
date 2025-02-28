@@ -6,3 +6,4 @@ class MatchStatus(Enum):
     NOT_STARTED = "notstarted"
     IN_PROGRESS = "inprogress"
     POSTPONED = "postponed"
+    CANCELED = "canceled"
