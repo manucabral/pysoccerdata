@@ -3,20 +3,17 @@ This is a simple example of how to get all in progress matches in real-time.
 
 The output will be something like this:
 
-12420335 - fk-radnicki-1923-fk-novi-pazar
-12420333 - fk-tsc-backa-topola-fk-cukaricki
-13012879 - zed-fc-zamalek-sc
-13267727 - al-arabi-sc-al-rayyan
-13330198 - ajman-al-nasr-dubai
-13330200 - al-wahda-fc-al-ain
-13243180 - ludogorets-botev-plovdiv
-13152103 - viktoria-plzen-fc-zlin
-12442063 - hvidovre-fc-fredericia
-12568456 - vfb-oldenburg-sv-werder-bremen-ii-u23
-13485867 - sc-chabab-mohammedia-moghreb-atletico-tetuan
-13203891 - puszcza-niepolomice-polonia-warszawa
-12618872 - steaua-bucuresti-csm-ceahlaul-piatra-neamt
-13542286 - sc-rothis-rw-rankweil
+Identifier:  13292240 rosario-central-boca-juniors
+Boca Juniors 1 vs 0 Rosario Central
+Status:  1st half
+Period elapsed:  12 minutes
+Total elapsed:  13 minutes
+
+Identifier:  13333168 sportivo-ameliano-recoleta-fc
+Recoleta 1 vs 1 Sportivo Ameliano
+Status:  2nd half
+Period elapsed:  50 minutes
+Total elapsed:  118 minutes
 
 Note: If you want all match details use the get_match_details method.
 """
@@ -24,11 +21,18 @@ Note: If you want all match details use the get_match_details method.
 import pysoccerdata
 
 client = pysoccerdata.Client()
-matchs = client.get_matchs()
 
-in_progress_matchs = pysoccerdata.filter_by(
-    matchs, pysoccerdata.MatchStatus.IN_PROGRESS
+result = client.get_matchs()
+in_progress_matches = pysoccerdata.filter_by(
+    result, pysoccerdata.MatchStatusType.IN_PROGRESS
 )
 
-for match in in_progress_matchs:
-    print(f"{match._id} - {match.info}")
+for match in in_progress_matches:
+
+    print("Identifier: ", match._id, match.info)
+    print(match.home_team, match.home_score, "vs", match.away_score, match.away_team)
+    print("Status: ", match.status.description)
+    print("Period elapsed: ", match.time.current_period_minutes, "minutes")
+    print("Total elapsed: ", match.time.elapsed_minutes, "minutes")
+
+    print("")
