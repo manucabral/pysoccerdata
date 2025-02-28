@@ -2,7 +2,8 @@
 The main client to interact with the library.
 """
 
-from typing import List
+from datetime import datetime
+from typing import List, Union
 from .utils import get_today
 from .services import SofascoreClient
 from .match import (
@@ -18,6 +19,8 @@ from .match import (
     MatchStatus,
     IncidentType,
 )
+from .search import EntityType, parse_entity_search
+from .tournament import TournamentCategory
 
 
 class Client:
@@ -51,6 +54,7 @@ class Client:
                 _id=event.get("id"),
                 status=MatchStatus(event.get("status", {}).get("type", "notstarted")),
                 info=event.get("slug"),
+                start_time=datetime.fromtimestamp(event.get("startTimestamp")),
             )
             for event in events
         ]
@@ -165,3 +169,46 @@ class Client:
             dict: A dictionary with all team details.
         """
         return self.__sofascore.get_team(team_id)
+
+    def get_tournaments_by_category(
+        self, category_id: Union[int, TournamentCategory]
+    ) -> dict:
+        """
+        Get all tournaments from a specific category.
+
+        Args:
+            category_id (TournamentCategory): The category id.
+
+        Returns:
+            dict: A dictionary with all tournaments from a specific category.
+        """
+        _id = None
+        if not isinstance(category_id, TournamentCategory):
+            _id = category_id
+        else:
+            _id = category_id.value
+        return self.__sofascore.get_tournaments_by_category(_id)
+
+    def search(
+        self, query: str, entity: Union[str, EntityType] = "all"
+    ) -> Union[List[MatchSummary], List[dict]]:
+        if isinstance(entity, EntityType):
+            entity = entity.value
+        raw_results = self.__sofascore.search(query, entity)
+        if entity == EntityType.MATCH.value:
+            return [
+                MatchSummary(
+                    _id=result["entity"].get("id"),
+                    status=MatchStatus(
+                        result["entity"].get("status", {}).get("type", "notstarted")
+                    ),
+                    info=result["entity"].get("slug"),
+                    start_time=datetime.fromtimestamp(
+                        result["entity"].get("startTimestamp")
+                    ),
+                )
+                for result in raw_results
+            ]
+
+        # for all results we use the parse_entity_search method
+        return parse_entity_search(raw_results)
